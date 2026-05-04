@@ -1,0 +1,21 @@
+mlBdchBrTN7oRtyq
+
+mdnazmulkhanfeni_db_user
+
+
+
+{
+  "message": "Test users created",
+  "users": [
+    {
+      "email": "admin@test.com",
+      "password": "password123",
+      "role": "administrator"
+    },
+    {
+      "email": "user@test.com",
+      "password": "password123",
+      "role": "user"
+    }
+  ]
+}

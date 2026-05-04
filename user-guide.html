@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic Administration System — User Guide</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 13px;
+      color: #1a1a2e;
+      background: #f8f9fa;
+      line-height: 1.6;
+    }
+
+    .cover {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #3b82f6 100%);
+      color: white;
+      text-align: center;
+      page-break-after: always;
+    }
+
+    .cover .logo {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: 8px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      margin-bottom: 16px;
+    }
+
+    .cover h1 {
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .cover .subtitle {
+      font-size: 15px;
+      opacity: 0.8;
+      margin-bottom: 48px;
+    }
+
+    .cover .meta {
+      font-size: 13px;
+      opacity: 0.65;
+      line-height: 2;
+    }
+
+    .cover .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 12px;
+      margin-top: 24px;
+      letter-spacing: 1px;
+    }
+
+    /* TOC */
+    .toc-page {
+      padding: 60px 80px;
+      page-break-after: always;
+      background: white;
+    }
+
+    .toc-page h2 {
+      font-size: 22px;
+      color: #1e3a8a;
+      border-bottom: 3px solid #3b82f6;
+      padding-bottom: 12px;
+      margin-bottom: 28px;
+    }
+
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px dotted #d1d5db;
+      font-size: 13px;
+    }
+
+    .toc-item .num {
+      background: #1e3a8a;
+      color: white;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: bold;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .toc-item .title { flex: 1; }
+    .toc-item .page { color: #6b7280; font-size: 11px; }
+
+    /* Content pages */
+    .page {
+      padding: 50px 70px;
+      background: white;
+      margin-bottom: 0;
+      page-break-after: always;
+    }
+
+    .page:last-child { page-break-after: avoid; }
+
+    /* Section header */
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 28px;
+      padding-bottom: 14px;
+      border-bottom: 3px solid #3b82f6;
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      font-size: 20px;
+      color: #1e3a8a;
+      font-weight: 700;
+    }
+
+    .section-header .section-desc {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    h3 {
+      font-size: 14px;
+      color: #1e3a8a;
+      margin: 22px 0 10px;
+      font-weight: 700;
+    }
+
+    h4 {
+      font-size: 13px;
+      color: #374151;
+      margin: 16px 0 8px;
+      font-weight: 600;
+    }
+
+    p { margin-bottom: 10px; color: #374151; }
+
+    /* Steps */
+    .steps { margin: 12px 0; }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .step-num {
+      background: #3b82f6;
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: bold;
+      margin-right: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-content { flex: 1; }
+    .step-content strong { color: #111827; }
+
+    /* Info boxes */
+    .info-box {
+      border-left: 4px solid #3b82f6;
+      background: #eff6ff;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 14px 0;
+      font-size: 12px;
+    }
+
+    .info-box.warning {
+      border-left-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .info-box.success {
+      border-left-color: #10b981;
+      background: #ecfdf5;
+    }
+
+    .info-box.danger {
+      border-left-color: #ef4444;
+      background: #fef2f2;
+    }
+
+    .info-box strong { display: block; margin-bottom: 4px; font-size: 12px; }
+
+    /* URL badge */
+    .url-badge {
+      display: inline-block;
+      background: #1e3a8a;
+      color: white;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Feature cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .card {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 16px;
+      background: #f9fafb;
+    }
+
+    .card .card-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .card h4 {
+      margin: 0 0 6px;
+      font-size: 13px;
+      color: #1e3a8a;
+    }
+
+    .card p { font-size: 11px; color: #6b7280; margin: 0; }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 12px;
+    }
+
+    th {
+      background: #1e3a8a;
+      color: white;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #e5e7eb;
+      color: #374151;
+    }
+
+    tr:nth-child(even) td { background: #f9fafb; }
+
+    /* Code */
+    code {
+      font-family: 'Courier New', monospace;
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: #dc2626;
+    }
+
+    /* Screenshot placeholder */
+    .screen {
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      background: #f9fafb;
+      height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 14px 0;
+      color: #9ca3af;
+      font-size: 12px;
+    }
+
+    .screen .screen-bar {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 16px;
+    }
+
+    .screen .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* Nav mockup */
+    .nav-mock {
+      background: #1e3a8a;
+      border-radius: 8px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 14px 0;
+      color: white;
+      font-size: 12px;
+    }
+
+    .nav-mock .logo { font-weight: 900; font-size: 16px; letter-spacing: 2px; }
+    .nav-mock .links { display: flex; gap: 20px; opacity: 0.9; }
+    .nav-mock .auth { display: flex; gap: 12px; font-size: 11px; }
+
+    /* Role badge */
+    .role-admin {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .role-user {
+      display: inline-block;
+      background: #ede9fe;
+      color: #5b21b6;
+      border: 1px solid #c4b5fd;
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* Footer bar on pages */
+    .page-footer {
+      margin-top: 40px;
+      padding-top: 12px;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #9ca3af;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 20px 0;
+    }
+
+    /* List */
+    ul.guide-list {
+      list-style: none;
+      margin: 10px 0;
+    }
+
+    ul.guide-list li {
+      padding: 5px 0;
+      padding-left: 18px;
+      position: relative;
+      font-size: 12px;
+      color: #374151;
+    }
+
+    ul.guide-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #3b82f6;
+      font-weight: bold;
+    }
+
+    @media print {
+      body { background: white; }
+      .page, .toc-page, .cover { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== COVER PAGE ========== -->
+<div class="cover">
+  <div class="logo">AAS</div>
+  <h1>Academic Administration System</h1>
+  <p class="subtitle">Complete User Guide & Documentation</p>
+  <div class="meta">
+    Version 1.0 &nbsp;·&nbsp; Next.js 14 App Router &nbsp;·&nbsp; MongoDB Atlas<br />
+    Built with TypeScript · Tailwind CSS · Better-Auth
+  </div>
+  <div class="badge">PRACTICUM PROJECT — P7 · P9 · P10 · P11</div>
+</div>
+
+<!-- ========== TABLE OF CONTENTS ========== -->
+<div class="toc-page">
+  <h2>Table of Contents</h2>
+
+  <div class="toc-item">
+    <span><span class="num">1</span><span class="title">System Overview</span></span>
+    <span class="page">Page 3</span>
+  </div>
+  <div class="toc-item">
+    <span><span class="num">2</span><span class="title">Getting Started — First Time Setup</span></span>
+    <span class="page">Page 4</span>
+  </div>
+  <div class="toc-item">
+    <span><span class="num">3</span><span class="title">Navigation & Interface</span></span>
+    <span class="page">Page 5</span>
+  </div>
+  <div class="toc-item">
+    <span><span class="num">4</span><span class="title">User Authentication (Sign Up / Sign In / Sign Out)</span></span>
+    <span class="page">Page 6</span>
+  </div>
+  <div class="toc-item">
+    <span><span class="num">5</span><span class="title">Subjects by Semester</span></span>
+    <span class="page">Page 7</span>
+  </div>
+  <div class="toc-item">
+    <span><span class="num">6</span><span class="title">Certificates Management</span></span>
+    <span class="page">Page 8</span>
+  </div>
+  <div class="toc-item">
+    <span><span class="num">7</span><span class="title">Group Students Management</span></span>
+    <span class="page">Page 9</span>
+  </div>
+  <div class="toc-item">
+    <span><span class="num">8</span><span class="title">Admin Panel — User Management</span></span>
+    <span class="page">Page 10</span>
+  </div>
+  <div class="toc-item">
+    <span><span class="num">9</span><span class="title">All Pages & URLs Reference</span></span>
+    <span class="page">Page 11</span>
+  </div>
+  <div class="toc-item">
+    <span><span class="num">10</span><span class="title">Troubleshooting</span></span>
+    <span class="page">Page 12</span>
+  </div>
+
+  <div style="margin-top:40px; padding:20px; background:#eff6ff; border-radius:10px; font-size:12px;">
+    <strong style="color:#1e3a8a; display:block; margin-bottom:8px;">How to use this guide</strong>
+    This guide covers every feature of the Academic Administration System. Follow sections in order for first-time setup, or jump to any section for specific feature help.
+    <br /><br />
+    <strong>To save as PDF:</strong> Open this file in Chrome/Edge → Press <code>Ctrl + P</code> → Change destination to <strong>"Save as PDF"</strong> → Click Save.
+  </div>
+
+  <div class="page-footer">
+    <span>Academic Administration System — User Guide</span>
+    <span>v1.0</span>
+  </div>
+</div>
+
+<!-- ========== PAGE 1: SYSTEM OVERVIEW ========== -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <div>
+      <h2>System Overview</h2>
+      <div class="section-desc">What the Academic Administration System does</div>
+    </div>
+  </div>
+
+  <p>The <strong>Academic Administration System (AAS)</strong> is a web-based platform for managing academic records including certificates, subjects, and student groups. It provides role-based access for regular users and administrators.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">📚</div>
+      <h4>Subjects by Semester</h4>
+      <p>Browse subjects available in each semester by selecting from a dropdown. Three semesters available with multiple subjects each.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📜</div>
+      <h4>Certificates</h4>
+      <p>Add, edit, and delete academic certificates. Each certificate has a type (Study Certificate or Academic Leave) and a company/institution name.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">👥</div>
+      <h4>Group Students</h4>
+      <p>View students organized by group. Select a group to see its members, and remove students if needed.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔐</div>
+      <h4>Admin Panel</h4>
+      <p>Administrator-only access to manage all users: view accounts and change user roles between User and Administrator.</p>
+    </div>
+  </div>
+
+  <h3>Technology Stack</h3>
+  <table>
+    <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+    <tr><td>Frontend Framework</td><td>Next.js 14 (App Router)</td><td>Page rendering and routing</td></tr>
+    <tr><td>Language</td><td>TypeScript</td><td>Type-safe development</td></tr>
+    <tr><td>Styling</td><td>Tailwind CSS</td><td>UI design and layout</td></tr>
+    <tr><td>Database</td><td>MongoDB Atlas + Mongoose</td><td>Data storage</td></tr>
+    <tr><td>Authentication</td><td>Better-Auth</td><td>Login, sessions, roles</td></tr>
+    <tr><td>Validation</td><td>Zod</td><td>Form and data validation</td></tr>
+  </table>
+
+  <h3>User Roles</h3>
+  <table>
+    <tr><th>Role</th><th>Access Level</th><th>Can Access</th></tr>
+    <tr>
+      <td><span class="role-user">user</span></td>
+      <td>Standard</td>
+      <td>Home, Subjects, Certificates, Group Students</td>
+    </tr>
+    <tr>
+      <td><span class="role-admin">administrator</span></td>
+      <td>Full Access</td>
+      <td>All pages including Admin Users panel</td>
+    </tr>
+  </table>
+
+  <div class="page-footer">
+    <span>Section 1 — System Overview</span>
+    <span>Academic Administration System</span>
+  </div>
+</div>
+
+<!-- ========== PAGE 2: GETTING STARTED ========== -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">2</div>
+    <div>
+      <h2>Getting Started — First Time Setup</h2>
+      <div class="section-desc">How to run and seed the application for the first time</div>
+    </div>
+  </div>
+
+  <h3>Starting the Development Server</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Open a terminal</strong> in the project folder <code>D:\academic-system-mehedi18</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Run the development server:</strong><br />
+        <code>npm run dev</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Open your browser</strong> and navigate to: <span class="url-badge">http://localhost:3000</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box success">
+    <strong>✅ Server is ready when you see:</strong>
+    <code>▲ Next.js — Local: http://localhost:3000</code>
+  </div>
+
+  <h3>Seeding the Database (First Time Only)</h3>
+  <p>Before using the app for the first time, populate the database with sample data:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Seed groups and students</strong> — visit this URL in your browser:<br />
+        <span class="url-badge">http://localhost:3000/api/seed</span><br />
+        <small style="color:#6b7280;">Creates 3 groups (A, B, C) and 10 sample students</small>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Create test user accounts</strong> — visit:<br />
+        <span class="url-badge">http://localhost:3000/api/seed-user</span><br />
+        <small style="color:#6b7280;">Creates admin and regular test accounts</small>
+      </div>
+    </div>
+  </div>
+
+  <h3>Test Accounts (after seeding)</h3>
+  <table>
+    <tr><th>Email</th><th>Password</th><th>Role</th></tr>
+    <tr>
+      <td><code>admin@test.com</code></td>
+      <td><code>password123</code></td>
+      <td><span class="role-admin">administrator</span></td>
+    </tr>
+    <tr>
+      <td><code>user@test.com</code></td>
+      <td><code>password123</code></td>
+      <td><span class="role-user">user</span></td>
+    </tr>
+  </table>
+
+  <div class="info-box warning">
+    <strong>⚠️ Important — MongoDB Connection</strong>
+    Make sure your <code>.env.local</code> file has the correct <code>MONGODB_URI</code> and your IP address is whitelisted in MongoDB Atlas Network Access settings before starting.
+  </div>
+
+  <h3>Required Environment Variables</h3>
+  <table>
+    <tr><th>Variable</th><th>Purpose</th></tr>
+    <tr><td><code>MONGODB_URI</code></td><td>MongoDB Atlas connection string</td></tr>
+    <tr><td><code>MONGO_DB</code></td><td>Database name (e.g. <code>academic-certification</code>)</td></tr>
+    <tr><td><code>BETTER_AUTH_SECRET</code></td><td>Secret key for session encryption</td></tr>
+    <tr><td><code>BETTER_AUTH_URL</code></td><td><code>http://localhost:3000</code></td></tr>
+    <tr><td><code>NEXT_PUBLIC_APP_URL</code></td><td><code>http://localhost:3000</code></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>Section 2 — Getting Started</span>
+    <span>Academic Administration System</span>
+  </div>
+</div>
+
+<!-- ========== PAGE 3: NAVIGATION ========== -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">3</div>
+    <div>
+      <h2>Navigation &amp; Interface</h2>
+      <div class="section-desc">How to move around the application</div>
+    </div>
+  </div>
+
+  <h3>The Navigation Bar</h3>
+  <p>The navigation bar appears at the top of every page. It contains the site logo, page links, and authentication controls.</p>
+
+  <div class="nav-mock">
+    <div class="logo">AAS</div>
+    <div class="links">
+      <span>Subjects</span>
+      <span>Certificates</span>
+      <span>Group Students</span>
+    </div>
+    <div class="auth">
+      <span>user@email.com</span>
+      <span>| Admin |</span>
+      <span>Sign Out</span>
+    </div>
+  </div>
+
+  <h3>Navigation Links</h3>
+  <table>
+    <tr><th>Link</th><th>URL</th><th>Description</th></tr>
+    <tr><td>AAS (logo)</td><td><span class="url-badge">/</span></td><td>Home dashboard with quick links</td></tr>
+    <tr><td>Subjects</td><td><span class="url-badge">/subjects</span></td><td>View subjects by semester</td></tr>
+    <tr><td>Certificates</td><td><span class="url-badge">/certificates</span></td><td>Manage academic certificates</td></tr>
+    <tr><td>Group Students</td><td><span class="url-badge">/group-students</span></td><td>View and manage student groups</td></tr>
+    <tr><td>Admin</td><td><span class="url-badge">/admin/users</span></td><td>Admin only — user management</td></tr>
+  </table>
+
+  <div class="info-box">
+    <strong>ℹ️ Admin Link</strong>
+    The "Admin" link only appears in the navigation bar if you are logged in with an <span class="role-admin">administrator</span> role account.
+  </div>
+
+  <h3>Mobile Navigation</h3>
+  <p>On small screens, the navigation menu collapses into a <strong>hamburger menu (☰)</strong> button. Tap it to expand the menu. All the same links are available on mobile.</p>
+
+  <h3>Authentication Controls (top right)</h3>
+
+  <table>
+    <tr><th>State</th><th>What you see</th><th>Actions available</th></tr>
+    <tr>
+      <td>Not logged in</td>
+      <td>Sign In · Sign Up links</td>
+      <td>Click to open auth pages</td>
+    </tr>
+    <tr>
+      <td>Logged in (user)</td>
+      <td>Your email · Sign Out button</td>
+      <td>Click Sign Out to log out</td>
+    </tr>
+    <tr>
+      <td>Logged in (admin)</td>
+      <td>Your email · Admin · Sign Out</td>
+      <td>Admin link to user management</td>
+    </tr>
+  </table>
+
+  <h3>Home Page Dashboard</h3>
+  <p>The home page (<span class="url-badge">/</span>) displays quick-access cards linking to the main features: Students, Schedules, Teachers, and Certificates. Click any card to navigate directly to that section.</p>
+
+  <div class="page-footer">
+    <span>Section 3 — Navigation &amp; Interface</span>
+    <span>Academic Administration System</span>
+  </div>
+</div>
+
+<!-- ========== PAGE 4: AUTHENTICATION ========== -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">4</div>
+    <div>
+      <h2>User Authentication</h2>
+      <div class="section-desc">Sign Up, Sign In, and Sign Out</div>
+    </div>
+  </div>
+
+  <h3>Creating a New Account (Sign Up)</h3>
+  <p>Navigate to <span class="url-badge">http://localhost:3000/signup</span> or click the <strong>Sign Up</strong> link in the top navigation.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Username</strong> — Enter your display name (minimum 2 characters)
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Email address</strong> — Enter a valid email (e.g. <code>john@example.com</code>)
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Password</strong> — Enter a password between 8 and 32 characters
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <strong>Click "Add"</strong> — Your account is created and you are redirected to the home page
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box warning">
+    <strong>⚠️ New accounts default to "user" role</strong>
+    To get administrator access, an existing administrator must change your role in the Admin panel, or you can update the role directly in MongoDB.
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Signing In</h3>
+  <p>Navigate to <span class="url-badge">http://localhost:3000/signin</span> or click the <strong>Sign In</strong> link.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content"><strong>Email address</strong> — Enter your registered email</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content"><strong>Password</strong> — Enter your password</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content"><strong>Click "Add"</strong> — You are logged in and redirected to the home page</div>
+    </div>
+  </div>
+
+  <div class="info-box success">
+    <strong>✅ Session Duration</strong>
+    Your session lasts <strong>1 hour</strong>. After that you will need to sign in again. The session is stored in a secure browser cookie.
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Signing Out</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">Look at the top-right of any page when you are logged in</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">Click the <strong>Sign Out</strong> button</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">You are automatically redirected to the Sign In page</div>
+    </div>
+  </div>
+
+  <h3>Validation Rules</h3>
+  <table>
+    <tr><th>Field</th><th>Rule</th></tr>
+    <tr><td>Username</td><td>Minimum 2 characters</td></tr>
+    <tr><td>Email</td><td>Must be a valid email format</td></tr>
+    <tr><td>Password</td><td>8–32 characters</td></tr>
+  </table>
+
+  <div class="info-box danger">
+    <strong>🔒 Security Note</strong>
+    Passwords are encrypted using bcrypt before being stored in MongoDB. Your plain-text password is never saved.
+  </div>
+
+  <div class="page-footer">
+    <span>Section 4 — User Authentication</span>
+    <span>Academic Administration System</span>
+  </div>
+</div>
+
+<!-- ========== PAGE 5: SUBJECTS ========== -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">5</div>
+    <div>
+      <h2>Subjects by Semester</h2>
+      <div class="section-desc">Browse subjects available in each academic semester</div>
+    </div>
+  </div>
+
+  <p>The Subjects page lets you view which subjects are taught in each semester. Simply select a semester from the dropdown and the subjects will load automatically.</p>
+
+  <p><strong>URL:</strong> <span class="url-badge">http://localhost:3000/subjects</span></p>
+
+  <h3>How to View Subjects</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Go to the Subjects page</strong> — click <strong>Subjects</strong> in the navigation bar or visit the URL above
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Select a semester</strong> from the dropdown menu (First, Second, or Third)
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>The subject list updates automatically</strong> — no need to click a button
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>ℹ️ Note</strong>
+    If no semester is selected, the subject list will be empty. Subjects only appear after you pick a semester.
+  </div>
+
+  <h3>Available Subjects by Semester</h3>
+  <table>
+    <tr><th>Semester</th><th>Subjects</th></tr>
+    <tr>
+      <td><strong>First</strong></td>
+      <td>Math, English</td>
+    </tr>
+    <tr>
+      <td><strong>Second</strong></td>
+      <td>Object-Oriented Programming, Professional Language</td>
+    </tr>
+    <tr>
+      <td><strong>Third</strong></td>
+      <td>Networks, Databases</td>
+    </tr>
+  </table>
+
+  <div class="divider"></div>
+
+  <h3>Behind the Scenes (How It Works)</h3>
+  <p>When you select a semester, the page sends a request to the API:</p>
+  <ul class="guide-list">
+    <li>Semesters are loaded from <code>/api/semesters</code> when the page opens</li>
+    <li>Selecting a semester calls <code>/api/subjects?semesterId=1</code> (or 2 or 3)</li>
+    <li>The subject list re-renders with the returned subjects</li>
+  </ul>
+
+  <div class="page-footer">
+    <span>Section 5 — Subjects by Semester</span>
+    <span>Academic Administration System</span>
+  </div>
+</div>
+
+<!-- ========== PAGE 6: CERTIFICATES ========== -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">6</div>
+    <div>
+      <h2>Certificates Management</h2>
+      <div class="section-desc">Add, view, edit, and delete academic certificates</div>
+    </div>
+  </div>
+
+  <p>The Certificates page is a full CRUD (Create, Read, Update, Delete) feature. You can manage academic certificates that are stored in MongoDB.</p>
+  <p><strong>URL:</strong> <span class="url-badge">http://localhost:3000/certificates</span></p>
+
+  <h3>Adding a New Certificate</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Click the "+" (Plus) button</strong> — a modal form opens on the right side of the screen
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Select Certificate Type</strong> from the dropdown:<br />
+        <em>Study Certificate</em> or <em>Academic Leave</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Enter Company/Institution Name</strong> (minimum 2 characters)
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <strong>Click "Add"</strong> — the certificate is saved and appears in the list immediately
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Viewing Certificates</h3>
+  <p>All saved certificates appear in a table on the Certificates page with these columns:</p>
+  <table>
+    <tr><th>Column</th><th>Description</th></tr>
+    <tr><td>Name</td><td>The certificate type (Study Certificate or Academic Leave)</td></tr>
+    <tr><td>Note</td><td>The company or institution name</td></tr>
+    <tr><td>Actions</td><td>Edit (pencil ✏️) and Delete (trash 🗑️) buttons</td></tr>
+  </table>
+
+  <div class="divider"></div>
+
+  <h3>Editing a Certificate</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">Find the certificate in the table and click the <strong>pencil ✏️ icon</strong></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">The form opens with the current values pre-filled</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">Change the type or company name as needed</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">Click <strong>"Add"</strong> — the record is updated in MongoDB</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Deleting a Certificate</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">Find the certificate in the table</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">Click the <strong>trash 🗑️ icon</strong></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">The certificate is deleted immediately — the list refreshes automatically</div>
+    </div>
+  </div>
+
+  <div class="info-box danger">
+    <strong>⚠️ Deletion is permanent</strong>
+    There is no confirmation dialog. Once you click the trash icon, the certificate is permanently deleted from MongoDB.
+  </div>
+
+  <div class="page-footer">
+    <span>Section 6 — Certificates Management</span>
+    <span>Academic Administration System</span>
+  </div>
+</div>
+
+<!-- ========== PAGE 7: GROUP STUDENTS ========== -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">7</div>
+    <div>
+      <h2>Group Students Management</h2>
+      <div class="section-desc">View and manage students organized by group</div>
+    </div>
+  </div>
+
+  <p>The Group Students page displays students organized by their assigned group. You can filter students by group and remove individual students from the system.</p>
+  <p><strong>URL:</strong> <span class="url-badge">http://localhost:3000/group-students</span></p>
+
+  <h3>Viewing Students by Group</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Go to Group Students</strong> — click in the navigation bar or visit the URL above
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Select a group</strong> from the dropdown (Group A, Group B, or Group C)
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>The student list loads automatically</strong> — showing all students in that group
+      </div>
+    </div>
+  </div>
+
+  <h3>Student Table Columns</h3>
+  <table>
+    <tr><th>Column</th><th>Description</th></tr>
+    <tr><td>First Name</td><td>Student's first name</td></tr>
+    <tr><td>Last Name</td><td>Student's last name</td></tr>
+    <tr><td>Actions</td><td>Delete button to remove student</td></tr>
+  </table>
+
+  <div class="divider"></div>
+
+  <h3>Deleting a Student</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">Select the group containing the student</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">Find the student in the table</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">Click the <strong>Delete</strong> button next to their name</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">The student is removed and the list refreshes automatically</div>
+    </div>
+  </div>
+
+  <div class="info-box danger">
+    <strong>⚠️ Deletion is permanent</strong>
+    Deleting a student removes them from the database immediately with no undo option.
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Sample Data (after seeding)</h3>
+  <table>
+    <tr><th>Group</th><th>Students</th></tr>
+    <tr><td>Group A</td><td>Multiple students assigned during database seeding</td></tr>
+    <tr><td>Group B</td><td>Multiple students assigned during database seeding</td></tr>
+    <tr><td>Group C</td><td>Multiple students assigned during database seeding</td></tr>
+  </table>
+
+  <div class="info-box">
+    <strong>ℹ️ No students showing?</strong>
+    Run <span class="url-badge">http://localhost:3000/api/seed</span> to populate the database with 3 groups and 10 sample students.
+  </div>
+
+  <div class="page-footer">
+    <span>Section 7 — Group Students Management</span>
+    <span>Academic Administration System</span>
+  </div>
+</div>
+
+<!-- ========== PAGE 8: ADMIN PANEL ========== -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">8</div>
+    <div>
+      <h2>Admin Panel — User Management</h2>
+      <div class="section-desc">Administrator-only access to manage system users</div>
+    </div>
+  </div>
+
+  <div class="info-box danger">
+    <strong>🔒 Restricted Access</strong>
+    This page is only accessible to users with the <span class="role-admin">administrator</span> role. Regular users are automatically redirected away. The Admin link only appears in navigation for administrators.
+  </div>
+
+  <p><strong>URL:</strong> <span class="url-badge">http://localhost:3000/admin/users</span></p>
+
+  <h3>What Administrators Can Do</h3>
+  <ul class="guide-list">
+    <li>View a table of all registered users in the system</li>
+    <li>See each user's name, email address, and current role</li>
+    <li>Change any user's role between <span class="role-user">user</span> and <span class="role-admin">administrator</span></li>
+  </ul>
+
+  <h3>Changing a User's Role</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Sign in</strong> with an administrator account
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Click "Admin"</strong> in the top-right navigation bar
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Find the user</strong> in the table
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <strong>Use the role dropdown</strong> next to the user's name to select their new role
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        The role is <strong>saved immediately</strong> — no submit button needed
+      </div>
+    </div>
+  </div>
+
+  <h3>User Table Columns</h3>
+  <table>
+    <tr><th>Column</th><th>Description</th></tr>
+    <tr><td>Name</td><td>User's display name (set during registration)</td></tr>
+    <tr><td>Email</td><td>User's email address</td></tr>
+    <tr><td>Role</td><td>Dropdown to view and change role</td></tr>
+  </table>
+
+  <div class="divider"></div>
+
+  <h3>Making the First Administrator (Manual MongoDB Method)</h3>
+  <p>If no administrator exists yet, follow these steps to promote a user manually:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">Open <strong>MongoDB Atlas</strong> → your cluster → <strong>Browse Collections</strong></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">Find the <code>users</code> collection in the <code>academic-certification</code> database</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">Find your user document and click <strong>Edit</strong></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">Add the field: <code>"role": "administrator"</code></div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">Click <strong>Update</strong> — sign out and sign back in to apply</div>
+    </div>
+  </div>
+
+  <div class="info-box success">
+    <strong>✅ Quick Method — Use Seed Users</strong>
+    Visit <span class="url-badge">http://localhost:3000/api/seed-user</span> to automatically create <code>admin@test.com</code> with administrator role.
+  </div>
+
+  <div class="page-footer">
+    <span>Section 8 — Admin Panel</span>
+    <span>Academic Administration System</span>
+  </div>
+</div>
+
+<!-- ========== PAGE 9: URL REFERENCE ========== -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">9</div>
+    <div>
+      <h2>All Pages &amp; URLs Reference</h2>
+      <div class="section-desc">Complete list of all routes in the application</div>
+    </div>
+  </div>
+
+  <h3>Frontend Pages</h3>
+  <table>
+    <tr><th>Page</th><th>URL</th><th>Access</th></tr>
+    <tr><td>Home Dashboard</td><td><code>http://localhost:3000/</code></td><td>Everyone</td></tr>
+    <tr><td>Sign In</td><td><code>http://localhost:3000/signin</code></td><td>Everyone</td></tr>
+    <tr><td>Sign Up</td><td><code>http://localhost:3000/signup</code></td><td>Everyone</td></tr>
+    <tr><td>Subjects</td><td><code>http://localhost:3000/subjects</code></td><td>Everyone</td></tr>
+    <tr><td>Certificates</td><td><code>http://localhost:3000/certificates</code></td><td>Everyone</td></tr>
+    <tr><td>Group Students</td><td><code>http://localhost:3000/group-students</code></td><td>Everyone</td></tr>
+    <tr><td>Admin — Users</td><td><code>http://localhost:3000/admin/users</code></td><td>Administrator only</td></tr>
+  </table>
+
+  <h3>API Endpoints</h3>
+  <table>
+    <tr><th>Endpoint</th><th>Method</th><th>Description</th></tr>
+    <tr><td><code>/api/semesters</code></td><td>GET</td><td>List all semesters</td></tr>
+    <tr><td><code>/api/subjects?semesterId=1</code></td><td>GET</td><td>Subjects for a semester</td></tr>
+    <tr><td><code>/api/groups</code></td><td>GET</td><td>List all student groups</td></tr>
+    <tr><td><code>/api/group-students/:groupId</code></td><td>GET</td><td>Students in a group</td></tr>
+    <tr><td><code>/api/group-students/:groupId/:studentId</code></td><td>DELETE</td><td>Delete a student</td></tr>
+    <tr><td><code>/api/certificates</code></td><td>GET</td><td>List all certificates</td></tr>
+    <tr><td><code>/api/certificates</code></td><td>POST</td><td>Add new certificate</td></tr>
+    <tr><td><code>/api/certificates/:id</code></td><td>PUT</td><td>Update certificate</td></tr>
+    <tr><td><code>/api/certificates/:id</code></td><td>DELETE</td><td>Delete certificate</td></tr>
+    <tr><td><code>/api/classificators/certificates</code></td><td>GET</td><td>Certificate type options</td></tr>
+    <tr><td><code>/api/admin/users/:id</code></td><td>PUT</td><td>Update user role (admin)</td></tr>
+  </table>
+
+  <h3>Utility/Seed Endpoints (run once)</h3>
+  <table>
+    <tr><th>URL</th><th>What it does</th></tr>
+    <tr>
+      <td><code>http://localhost:3000/api/seed</code></td>
+      <td>Creates 3 groups (A, B, C), 10 students, and 2 certificate types in MongoDB</td>
+    </tr>
+    <tr>
+      <td><code>http://localhost:3000/api/seed-user</code></td>
+      <td>Creates <code>admin@test.com</code> (administrator) and <code>user@test.com</code> (user) with password <code>password123</code></td>
+    </tr>
+  </table>
+
+  <div class="info-box warning">
+    <strong>⚠️ Seed endpoints are for development only</strong>
+    Running the seed endpoints multiple times will create duplicate data. Only run them once on a fresh database.
+  </div>
+
+  <div class="page-footer">
+    <span>Section 9 — URL Reference</span>
+    <span>Academic Administration System</span>
+  </div>
+</div>
+
+<!-- ========== PAGE 10: TROUBLESHOOTING ========== -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">10</div>
+    <div>
+      <h2>Troubleshooting</h2>
+      <div class="section-desc">Common problems and how to fix them</div>
+    </div>
+  </div>
+
+  <h3>MongoDB Connection Errors</h3>
+
+  <div class="info-box danger">
+    <strong>Error: querySrv ECONNREFUSED</strong>
+    Your network's DNS server is blocking MongoDB SRV lookups.
+    <br /><br />
+    <strong>Fix:</strong> Change your DNS server to Google DNS:
+    Go to <em>Settings → Network &amp; Internet → your connection → DNS → set to 8.8.8.8</em>
+    Then restart <code>npm run dev</code>.
+  </div>
+
+  <div class="info-box danger">
+    <strong>Error: MongoServerError: bad auth / Authentication failed</strong>
+    The username or password in your <code>.env.local</code> is wrong.
+    <br /><br />
+    <strong>Fix:</strong> Go to MongoDB Atlas → Database Access → check your user credentials match the <code>MONGODB_URI</code> in <code>.env.local</code>.
+  </div>
+
+  <div class="info-box danger">
+    <strong>Error: connection timed out / ETIMEDOUT</strong>
+    Your IP address is not whitelisted in MongoDB Atlas.
+    <br /><br />
+    <strong>Fix:</strong> Go to MongoDB Atlas → Network Access → Add IP Address → Add Current IP Address.
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Application Issues</h3>
+
+  <table>
+    <tr><th>Problem</th><th>Cause</th><th>Fix</th></tr>
+    <tr>
+      <td>No subjects appear after selecting semester</td>
+      <td>API not responding</td>
+      <td>Check server is running with <code>npm run dev</code></td>
+    </tr>
+    <tr>
+      <td>No groups in Group Students dropdown</td>
+      <td>Database not seeded</td>
+      <td>Visit <code>/api/seed</code> to populate data</td>
+    </tr>
+    <tr>
+      <td>No certificate types in form dropdown</td>
+      <td>Database not seeded</td>
+      <td>Visit <code>/api/seed</code> to populate data</td>
+    </tr>
+    <tr>
+      <td>Cannot access /admin/users</td>
+      <td>Not logged in as administrator</td>
+      <td>Sign in with admin account or update role in MongoDB</td>
+    </tr>
+    <tr>
+      <td>Sign in fails with correct password</td>
+      <td>User not in database</td>
+      <td>Register first via <code>/signup</code> or run <code>/api/seed-user</code></td>
+    </tr>
+    <tr>
+      <td>Page shows "MONGODB_URI not defined"</td>
+      <td>Missing .env.local file</td>
+      <td>Create <code>.env.local</code> with all required variables</td>
+    </tr>
+    <tr>
+      <td>Changes not appearing after edit</td>
+      <td>Browser cache</td>
+      <td>Hard refresh: <code>Ctrl + Shift + R</code></td>
+    </tr>
+  </table>
+
+  <div class="divider"></div>
+
+  <h3>Working on Different Networks (Home vs Office)</h3>
+  <p>If the app works at one location but not another:</p>
+  <ul class="guide-list">
+    <li><strong>IP Whitelist</strong> — Each network has a different public IP. Add your current IP to MongoDB Atlas Network Access</li>
+    <li><strong>DNS Blocking</strong> — Some ISPs block SRV DNS lookups. Change DNS to <code>8.8.8.8</code> (Google) or <code>1.1.1.1</code> (Cloudflare)</li>
+    <li><strong>Port 27017 blocked</strong> — Some routers block this port. Test with: <code>Test-NetConnection -ComputerName &lt;host&gt; -Port 27017</code></li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <h3>Quick Checklist for First-Time Setup</h3>
+  <ul class="guide-list">
+    <li><code>.env.local</code> file exists with all 5 required variables</li>
+    <li>Your IP is added to MongoDB Atlas Network Access</li>
+    <li>DNS is set to <code>8.8.8.8</code> (if on a network that blocks SRV lookups)</li>
+    <li>Dev server is running: <code>npm run dev</code></li>
+    <li>Database seeded: visited <code>/api/seed</code> and <code>/api/seed-user</code> once</li>
+  </ul>
+
+  <div style="margin-top:40px; text-align:center; padding:30px; background:linear-gradient(135deg,#1e3a8a,#3b82f6); border-radius:12px; color:white;">
+    <div style="font-size:28px; font-weight:900; letter-spacing:4px; margin-bottom:8px;">AAS</div>
+    <div style="font-size:14px; opacity:0.9;">Academic Administration System</div>
+    <div style="font-size:11px; opacity:0.7; margin-top:12px;">User Guide v1.0 · Built with Next.js 14 · MongoDB Atlas · Better-Auth</div>
+  </div>
+
+  <div class="page-footer">
+    <span>Section 10 — Troubleshooting</span>
+    <span>Academic Administration System — End of Guide</span>
+  </div>
+</div>
+
+</body>
+</html>
